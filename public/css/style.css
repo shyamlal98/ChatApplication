@@ -1,0 +1,48 @@
+#success_message {
+    display: none;
+}
+
+.inputGroupContainer {
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.icon {
+    padding: 11px;
+    color: white;
+    min-width: 50px;
+    text-align: center;
+    border-bottom-left-radius: 5rem!important;
+    border-top-left-radius: 5rem!important;
+    background: aquamarine;
+}
+
+.form-control {
+    border-bottom-right-radius: 5rem;
+    border-top-right-radius: 5rem;
+    background-color: aquamarine;
+}
+
+#reg_form {
+    margin-top: 2rem;
+    margin-top: 2rem;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 3rem;
+    background-color: rgba(58, 46, 85, 0.3);
+}
+
+body {
+    background: url('../images/exambg2.jpg');
+    background-repeat: no-repeat;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover
+}
+
+#chatMessagesDiv{
+    background-color: aqua;
+    color:white;
+    height: 600px;
+}
