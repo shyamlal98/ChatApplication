@@ -38,11 +38,26 @@ body {
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover
+    background-size: cover;
 }
-
 #chatMessagesDiv{
-    background-color: aqua;
     color:white;
     height: 600px;
+}
+
+#participantsList
+{
+  list-style-type:none;
+}
+
+.ch-header{
+  background-color: #9EBBC3;
+}
+.ch-body{
+  
+  background-color: #e6ffdd;
+  color: black!important;
+}
+.p-info{
+  background-color:#90EE90 ;
 }

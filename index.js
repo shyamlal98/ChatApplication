@@ -1,49 +1,108 @@
 var express = require("express");
-var path = require('path');
+var path = require("path");
 var bodyParser = require("body-parser");
-var http = require("http")
+var http = require("http");
 var socketio = require("socket.io");
-var querystring = require("querystring");
+var queryString = require("querystring");
 
-const PORT = 3000;
+var userObj = require("./utils/usersInfo");
+var msgObj = require("./utils/messageManagement");
+
+const PORT = 4000;
+
 var app = express();
-const server = http.createServer(app);
+const server=http.createServer(app);
 var io = socketio(server);
 
-app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.get("/",(req,res)=>{
-    var fileUrl = path.join(__dirname,"public","index.html");
-    res.sendFile(fileUrl);
-});
-
-
-app.post("/home",(req,res)=>{
-    var username = req.body.username;
-    var tmp = querystring.stringify({username:username})
-    res.redirect("/chat/"+ tmp);
+app.get("/", (request, response)=>{
+    var fileUrl = path.join(__dirname, "public", "index.html");
+    response.sendFile(fileUrl);
 })
 
-app.get("/chat/:username",(req,res)=>{
-    var fileUrl = path.join(__dirname,"public","chat.html");
-    res.sendFile(fileUrl);
+app.post("/home", (request, response)=>{
+    var userName=request.body.userName;
+    var roomName=request.body.roomName;
+    // console.log(request.body);
+    var temp=queryString.stringify({userName:userName, roomName:roomName});
+    response.redirect("/chat?"+temp);
 })
 
-io.on('connection',(socket)=>{
-    socket.on("joinRoom",(data)=>{
+app.get("/chat", (request, response)=>{
+    var fileUrl = path.join(__dirname, "public", "chat.html");
+    response.sendFile(fileUrl);
+})
+
+//when a new user joins the chat
+io.on("connection", function (socket){
+    //when a new user joining in
+    socket.on("joinRoom", function (data){
+        socket.join(data.roomName);
         console.log(data);
-        socket.emit("welcomeUser","Welcome to the Room");
+        var obj={userName:data.userName, message:" has joined the room", roomName:data.roomName}
+        userObj.newUserJoin(socket.id, data.userName, data.roomName, socket, obj, io);
+        // msgObj.postMessage(obj);
+        // 
+
+        // userObj.getAllUsers(data.roomName, (p1)=>{
+        //     if(p1.length==0)
+        //     {
+        //         console.log("No users in the room");
+        //     }
+        //     else
+        //     {
+        //         if(p1[0].error)
+        //         {
+        //             console.log(p1[0].error);
+        //         }
+        //         else
+        //         {
+        //             io.to(obj.roomName).emit("modifyUsersList", p1);
+        //         }
+        //     }
+        // });
+        // io.to(data.roomName).emit("modifyUsersList", usersArr);
     })
-    socket.on("disconnection",()=>{
+
+    socket.on("disconnect", ()=>{
         console.log("User has left the room");
+        userObj.removeUser(socket.id, socket);
+    })
+
+    socket.on("message", (obj)=>{
+        console.log("Message Recieved", obj);
+        msgObj.postMessage(obj);
+        io.to(obj.roomName).emit("chatMsg", obj);
+        console.log("All messages",msgObj.getAllMessages());
+
+        console.log("All users in the room : ");
+        userObj.getAllUsers(obj.roomName, (p1)=>{
+            if(p1.length==0)
+            {
+                console.log("No users in the room");
+            }
+            else
+            {
+                if(p1[0].error)
+                {
+                    console.log(p1[0].error);
+                }
+                else
+                {
+                    io.to(obj.roomName).emit("modifyUsersList", p1);
+                }
+            }
+        });
+        
     })
 })
 
-
-app.listen(PORT,(err)=>{
-    if(!err){
-        console.log(`Server is running at PORT ${PORT}`);
+server.listen(PORT, (err)=>{
+    if(!err)
+    {
+        console.log(`Server running at PORT ${PORT}`);
     }
-});
+})

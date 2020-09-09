@@ -11,18 +11,19 @@
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
+
     <div class="container">
         <div class="row">
-            <div class="col-md-6 offset-4">
+            <div class="col-md-6 offset-4" id="p1">
                 <h1>Chat Application</h1>
             </div>
         </div>
             
-        <form class="col-md-8 offset-2" action="http://localhost:3000/home" method="POST" id="reg_form">
+        <form class="col-md-8 offset-2" action="http://localhost:4000/home" method="POST" id="reg_form">
             <fieldset class="">
 
                 <!-- Form Name -->
@@ -39,7 +40,7 @@
                     <div class="col-md-10 offset-1 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user-circle icon"></i></span>
-                            <input name="username" placeholder="Username" class="form-control" type="text">
+                            <input name="userName" placeholder="userName" class="form-control" type="text">
                         </div>
                     </div>
                 </div>
@@ -50,7 +51,7 @@
                     <div class="col-md-10 offset-1 inputGroupContainer">
                         <div class="input-group" >
                             <span class="input-group-addon"><i class="fa fa-suitcase icon"></i></i></span>
-                            <select id="rooms" name="rooms" class="form-control">
+                            <select id="roomName" name="roomName" class="form-control">
                                 <option value="angular">Angular</option>
                                 <option value="vuejs">Vuejs</option>
                                 <option value="reactjs">Reactjs</option>
@@ -91,7 +92,6 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/5.2.0/qs.min.js" integrity="sha512-6oDLnGuH2RPn58sYrhKZapGFTy6BTgYjTdGQNy7TMRnNqvEu4gqQdiTs1pjmsJEs88B2BMvjcA8u4MuATvyN9w==" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js " integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj " crossorigin="anonymous "></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js " integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN " crossorigin="anonymous "></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js " integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV " crossorigin="anonymous "></script>
